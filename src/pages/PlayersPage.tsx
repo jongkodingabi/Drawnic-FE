@@ -1,20 +1,51 @@
-import { useEffect } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { useFetchPlayers } from "../hooks/usePlayers";
 import { Link, useNavigate } from "react-router-dom";
 import Sidebar from "../components/Layout/Sidebar";
+import toast from "react-hot-toast";
+
+const PAGE_SIZE = 10;
 
 const PlayersPage = () => {
   const navigate = useNavigate();
   const { fetchPlayers, players, isLoading, playersError, removePlayer } =
     useFetchPlayers();
 
+  const [search, setSearch] = useState("");
+  const [page, setPage] = useState(1);
+
   const handleDeletePlayer = async (playerId: any) => {
-    await removePlayer(playerId);
+    try {
+      await removePlayer(playerId);
+      toast.success("successfully deleted player");
+    } catch (error) {
+      console.error("Failed to delete player:", error);
+      toast.error("Failed tob delete player");
+    }
   };
 
   useEffect(() => {
     fetchPlayers();
   }, []);
+
+  // Filter players by search
+  const filteredPlayers = useMemo(() => {
+    return players.filter((player: any) =>
+      player.name.toLowerCase().includes(search.toLowerCase())
+    );
+  }, [players, search]);
+
+  // Pagination
+  const totalPages = Math.ceil(filteredPlayers.length / PAGE_SIZE);
+  const paginatedPlayers = useMemo(() => {
+    const start = (page - 1) * PAGE_SIZE;
+    return filteredPlayers.slice(start, start + PAGE_SIZE);
+  }, [filteredPlayers, page]);
+
+  // Reset page if search changes
+  useEffect(() => {
+    setPage(1);
+  }, [search]);
 
   return (
     <div className="flex">
@@ -36,12 +67,19 @@ const PlayersPage = () => {
               </p>
             )}
 
-            <div className="mb-4">
+            <div className="mb-4 flex items-center gap-4">
               <Link to="/addPlayers">
-                <button className="w-30 flex items-end rounded-2xl bg-red-700 py-2 px-4 mb-10 text-white">
+                <button className="w-30 flex items-end rounded-2xl bg-red-700 py-2 px-4 mb-0 text-white">
                   Add Player
                 </button>
               </Link>
+              <input
+                type="text"
+                placeholder="Search by name..."
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+                className="rounded-lg px-3 py-2 border border-gray-300"
+              />
             </div>
 
             <div className="w-full rounded-2xl bg-white shadow-lg overflow-x-auto">
@@ -68,7 +106,7 @@ const PlayersPage = () => {
                     </tr>
                   </thead>
                   <tbody>
-                    {players.length === 0 ? (
+                    {paginatedPlayers.length === 0 ? (
                       <tr>
                         <td
                           colSpan={6}
@@ -78,7 +116,7 @@ const PlayersPage = () => {
                         </td>
                       </tr>
                     ) : (
-                      players.map((player, idx) => (
+                      paginatedPlayers.map((player, idx) => (
                         <tr
                           key={player.id || idx}
                           className={idx % 2 === 0 ? "bg-white" : "bg-gray-50"}
@@ -120,6 +158,35 @@ const PlayersPage = () => {
                   </tbody>
                 </table>
               </div>
+            </div>
+
+            {/* Pagination Controls */}
+            <div className="flex justify-center mt-4 gap-2">
+              <button
+                onClick={() => setPage((p) => Math.max(1, p - 1))}
+                disabled={page === 1}
+                className="px-3 py-1 rounded bg-gray-300 disabled:opacity-50"
+              >
+                Prev
+              </button>
+              {Array.from({ length: totalPages }, (_, i) => (
+                <button
+                  key={i}
+                  onClick={() => setPage(i + 1)}
+                  className={`px-3 py-1 rounded ${
+                    page === i + 1 ? "bg-red-700 text-white" : "bg-gray-200"
+                  }`}
+                >
+                  {i + 1}
+                </button>
+              ))}
+              <button
+                onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
+                disabled={page === totalPages}
+                className="px-3 py-1 rounded bg-gray-300 disabled:opacity-50"
+              >
+                Next
+              </button>
             </div>
           </div>
         </div>

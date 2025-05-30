@@ -12,16 +12,17 @@ import AddTeam from "./CRUD/Teams/Create";
 import EditTeams from "./CRUD/Teams/Edit";
 import ProtectedRoute from "./ProtectedRoute";
 import LoginForm from "./components/Forms/LoginForm";
-import LandingPage from "./pages/LandingPage";
+// import LandingPage from "./pages/LandingPage";
 import DrawPage from "./pages/DrawPage";
+import PlayersByTeamPage from "./pages/PlayersByTeams";
 
 function App() {
   return (
     <>
       <Toaster position="top-right" reverseOrder={false} />
       <Routes>
-        <Route path="/" element={<LandingPage />} />
-        <Route path="/auth" element={<LoginForm />} />
+        <Route path="/" element={<LoginForm />} />
+        {/* <Route path="/auth" element={<LoginForm />} /> */}
         <Route
           path="/dashboard"
           element={
@@ -83,6 +84,14 @@ function App() {
           element={
             <ProtectedRoute>
               <DrawPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/playersByTeam"
+          element={
+            <ProtectedRoute>
+              <PlayersByTeamPage />
             </ProtectedRoute>
           }
         />

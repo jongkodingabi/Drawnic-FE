@@ -1,4 +1,13 @@
-import { Home, User, Settings, Group, StopCircleIcon } from "lucide-react";
+import {
+  Home,
+  User,
+  Settings,
+  Group,
+  StopCircleIcon,
+  GroupIcon,
+  LucideGroup,
+  PersonStanding,
+} from "lucide-react";
 import { Link } from "react-router-dom";
 import React from "react";
 const Sidebar = () => {
@@ -67,6 +76,11 @@ const Sidebar = () => {
           <Link to="/drawpage">
             <div className="flex text-white items-center gap-3 p-3 rounded-lg hover:bg-blue-500/70 transition font-medium">
               <StopCircleIcon size={22} /> <span>Draw Page</span>
+            </div>
+          </Link>
+          <Link to="/playersByTeam">
+            <div className="flex text-white items-center gap-3 p-3 rounded-lg hover:bg-blue-500/70 transition font-medium">
+              <PersonStanding size={22} /> <span>Players by team</span>
             </div>
           </Link>
         </nav>
