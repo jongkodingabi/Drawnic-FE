@@ -27,7 +27,7 @@ const PlayersPage = () => {
     <div className="flex">
       <Sidebar />
 
-      <main className="w-full flex-1">
+      <main className="w-full flex-1 p-10 md:pl-80">
         <div className="p-6">
           <h1 className="text-3xl font-bold mb-6 text-gray-800">
             📋 Teams Page

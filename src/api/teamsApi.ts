@@ -10,7 +10,20 @@ export const getTeams = () => axiosInstance.get("/api/teams");
 
 export const getTeam = (id: number) => axiosInstance.get(`/api/teams/${id}`);
 
-export const createTeam = (data: any) => axiosInstance.post("/api/teams", data);
+export const createTeam = async (data: any) => {
+  // 1. Ambil cookie CSRF
+  await axiosInstance.get("/sanctum/csrf-cookie");
+
+  // 2. Dapatkan nilai token dari cookie
+  const xsrfToken = getCookie("XSRF-TOKEN");
+
+  // 3. Kirim token dalam header
+  return axiosInstance.post("/api/teams", data, {
+    headers: {
+      "X-XSRF-TOKEN": decodeURIComponent(xsrfToken || ""),
+    },
+  });
+};
 
 export const deleteTeam = async (id: number) => {
   // 1. Ambil cookie CSRF
@@ -26,8 +39,19 @@ export const deleteTeam = async (id: number) => {
     },
   });
 };
-export const updateTeam = (id: number, data: any) => {
-  return axiosInstance.patch(`/api/teams/${id}`, data);
+// Api Call Update
+export const updateTeam = async (id: number, data: any) => {
+  await axiosInstance.get("/sanctum/csrf-cookie");
+
+  // 2. Dapatkan nilai token dari cookie
+  const xsrfToken = getCookie("XSRF-TOKEN");
+
+  // 3. Kirim token dalam header
+  return axiosInstance.patch(`/api/teams/${id}`, data, {
+    headers: {
+      "X-XSRF-TOKEN": decodeURIComponent(xsrfToken || ""),
+    },
+  });
 };
 
 export function getTeamsCount(): Promise<{ data: { data: number } }> {

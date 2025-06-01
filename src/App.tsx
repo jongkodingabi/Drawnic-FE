@@ -15,13 +15,16 @@ import LoginForm from "./components/Forms/LoginForm";
 // import LandingPage from "./pages/LandingPage";
 import DrawPage from "./pages/DrawPage";
 import PlayersByTeamPage from "./pages/PlayersByTeams";
+import LandingPage from "./pages/LandingPage";
+import ManualAssignPage from "./pages/AssignPlayer";
 
 function App() {
   return (
     <>
       <Toaster position="top-right" reverseOrder={false} />
       <Routes>
-        <Route path="/" element={<LoginForm />} />
+        <Route path="/" element={<LandingPage />} />
+        <Route path="/auth" element={<LoginForm />} />
         {/* <Route path="/auth" element={<LoginForm />} /> */}
         <Route
           path="/dashboard"
@@ -41,6 +44,14 @@ function App() {
         />
         <Route
           path="/teams"
+          element={
+            <ProtectedRoute>
+              <TeamsPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/assignPlayer"
           element={
             <ProtectedRoute>
               <TeamsPage />
@@ -72,7 +83,7 @@ function App() {
           }
         />
         <Route
-          path="/Teams/:id/edit"
+          path="/teams/:id/edit"
           element={
             <ProtectedRoute>
               <EditTeams />
@@ -92,6 +103,14 @@ function App() {
           element={
             <ProtectedRoute>
               <PlayersByTeamPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/assign-players"
+          element={
+            <ProtectedRoute>
+              <ManualAssignPage />
             </ProtectedRoute>
           }
         />

@@ -40,71 +40,74 @@ const PlayerForm = ({ initialData, onSubmit }: PlayerForms) => {
     <>
       <div className="flex">
         <Sidebar />
-        <Link to="/players">
+        {/* <Link to="/players">
           <button className="bg-blue-500 text-white w-20 rounded-3xl p-2 mb-8 hover:bg-blue-600 transition-colors fixed z-50 shadow-lg">
             {"<-"} Back
           </button>
-        </Link>
+        </Link> */}
         <form
           onSubmit={handleSubmit}
-          className="min-w-2xl mx-auto p-8 rounded-lg shadow-xl space-y-6"
+          className="max-w-2xl mx-auto bg-white p-10 rounded-2xl shadow-2xl space-y-8 mt-10 border border-gray-100"
         >
-          <div className="grid grid-cols-2 gap-6 w-full">
+          <h2 className="text-2xl font-bold text-gray-800 mb-6 text-center">
+            Player Information
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             <div>
               <label
                 htmlFor="name"
-                className="block text-sm font-medium text-gray-700 mb-1"
+                className="block text-sm font-semibold text-gray-700 mb-2"
               >
                 Name
               </label>
               <input
                 id="name"
                 name="name"
-                placeholder="Name"
+                placeholder="Enter player's name"
                 value={form.name}
                 onChange={handleChange}
                 required
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
               />
             </div>
             <div>
               <label
                 htmlFor="telephone"
-                className="block text-sm font-medium text-gray-700 mb-1"
+                className="block text-sm font-semibold text-gray-700 mb-2"
               >
                 Telephone
               </label>
               <input
                 id="telephone"
                 name="telephone"
-                placeholder="Telephone"
+                placeholder="Enter telephone number"
                 value={form.telephone}
                 onChange={handleChange}
                 required
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
               />
             </div>
             <div>
               <label
                 htmlFor="position"
-                className="block text-sm font-medium text-gray-700 mb-1"
+                className="block text-sm font-semibold text-gray-700 mb-2"
               >
                 Position
               </label>
               <input
                 id="position"
                 name="position"
-                placeholder="Position"
+                placeholder="Enter position"
                 value={form.position}
                 onChange={handleChange}
                 required
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
               />
             </div>
             <div>
               <label
                 htmlFor="age"
-                className="block text-sm font-medium text-gray-700 mb-1"
+                className="block text-sm font-semibold text-gray-700 mb-2"
               >
                 Age
               </label>
@@ -112,36 +115,37 @@ const PlayerForm = ({ initialData, onSubmit }: PlayerForms) => {
                 id="age"
                 name="age"
                 type="number"
-                placeholder="Age"
+                min={0}
+                placeholder="Enter age"
                 value={form.age}
                 onChange={handleChange}
                 required
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
               />
             </div>
-            <div>
+            <div className="md:col-span-2">
               <label
                 htmlFor="major"
-                className="block text-sm font-medium text-gray-700 mb-1"
+                className="block text-sm font-semibold text-gray-700 mb-2"
               >
                 Major
               </label>
               <input
                 id="major"
                 name="major"
-                placeholder="Major"
+                placeholder="Enter major"
                 value={form.major}
                 onChange={handleChange}
                 required
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
               />
             </div>
           </div>
           <button
             type="submit"
-            className="w-full py-2 px-4 bg-blue-600 text-white font-semibold rounded-md hover:bg-blue-700 transition-colors"
+            className="w-full py-3 px-4 bg-gradient-to-r from-blue-600 to-blue-400 text-white font-bold rounded-lg shadow-md hover:from-blue-700 hover:to-blue-500 transition"
           >
-            Simpan
+            Save Player
           </button>
         </form>
       </div>

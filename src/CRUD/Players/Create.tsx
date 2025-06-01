@@ -1,7 +1,7 @@
 import PlayerForm from "../../components/Forms/PlayerForm";
 import { useFetchPlayers } from "../../hooks/usePlayers";
 import { useNavigate } from "react-router-dom";
-import Sidebar from "../../components/Layout/Sidebar";
+// import Sidebar from "../../components/Layout/Sidebar";
 import toast from "react-hot-toast";
 const AddPlayer = () => {
   const { addPlayer } = useFetchPlayers();
@@ -21,9 +21,9 @@ const AddPlayer = () => {
   return (
     <>
       <div className="flex">
-        <Sidebar />
+        {/* <Sidebar /> */}
         <div className="flex-1 w-full">
-          <h1>Tambah Player</h1>
+          {/* <h1>Tambah Player</h1> */}
           <PlayerForm onSubmit={handleSubmit}></PlayerForm>
         </div>
       </div>

@@ -7,11 +7,12 @@ import {
   GroupIcon,
   LucideGroup,
   PersonStanding,
+  Send,
 } from "lucide-react";
 import { Link } from "react-router-dom";
 import React from "react";
 const Sidebar = () => {
-  const [open, setOpen] = React.useState(true);
+  const [open, setOpen] = React.useState(false);
 
   return (
     <>
@@ -81,6 +82,11 @@ const Sidebar = () => {
           <Link to="/playersByTeam">
             <div className="flex text-white items-center gap-3 p-3 rounded-lg hover:bg-blue-500/70 transition font-medium">
               <PersonStanding size={22} /> <span>Players by team</span>
+            </div>
+          </Link>
+          <Link to="/assign-players">
+            <div className="flex text-white items-center gap-3 p-3 rounded-lg hover:bg-blue-500/70 transition font-medium">
+              <Send size={22} /> <span>Assign Manually</span>
             </div>
           </Link>
         </nav>

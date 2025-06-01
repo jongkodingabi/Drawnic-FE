@@ -48,16 +48,16 @@ const PlayersPage = () => {
   }, [search]);
 
   return (
-    <div className="flex">
+    <div className="flex flex-col md:flex-row">
       <Sidebar />
 
-      <main className="w-full flex-1">
-        <div className="p-6">
-          <h1 className="text-3xl font-bold mb-6 text-gray-800">
+      <main className="w-full flex-1 p-4 md:p-10 md:pl-80">
+        <div className="p-2 md:p-6">
+          <h1 className="text-2xl md:text-3xl font-bold mb-4 md:mb-6 text-gray-800">
             📋 Players Page
           </h1>
 
-          <div className="bg-gray-200 rounded-2xl shadow-2xl p-8">
+          <div className="bg-gray-200 rounded-2xl shadow-2xl p-4 md:p-8">
             {isLoading && (
               <p className="text-blue-600 mb-4">🔄 Sedang mengambil data...</p>
             )}
@@ -67,9 +67,9 @@ const PlayersPage = () => {
               </p>
             )}
 
-            <div className="mb-4 flex items-center gap-4">
+            <div className="mb-4 flex flex-col sm:flex-row items-stretch sm:items-center gap-2 sm:gap-4">
               <Link to="/addPlayers">
-                <button className="w-30 flex items-end rounded-2xl bg-red-700 py-2 px-4 mb-0 text-white">
+                <button className="w-full sm:w-auto flex items-end rounded-2xl bg-red-700 py-2 px-4 mb-0 text-white">
                   Add Player
                 </button>
               </Link>
@@ -78,31 +78,31 @@ const PlayersPage = () => {
                 placeholder="Search by name..."
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
-                className="rounded-lg px-3 py-2 border border-gray-300"
+                className="rounded-lg px-3 py-2 border border-gray-300 w-full sm:w-auto"
               />
             </div>
 
             <div className="w-full rounded-2xl bg-white shadow-lg overflow-x-auto">
               <div style={{ maxHeight: "700px" }}>
-                <table className="w-full text-left">
+                <table className="w-full text-left min-w-[600px]">
                   <thead className="bg-gray-100">
                     <tr>
-                      <th className="px-6 py-3 text-xs font-semibold text-gray-700 uppercase tracking-wider">
+                      <th className="px-4 md:px-6 py-3 text-xs font-semibold text-gray-700 uppercase tracking-wider">
                         Name
                       </th>
-                      <th className="px-6 py-3 text-xs font-semibold text-gray-700 uppercase tracking-wider">
+                      <th className="px-4 md:px-6 py-3 text-xs font-semibold text-gray-700 uppercase tracking-wider">
                         Telephone
                       </th>
-                      <th className="px-6 py-3 text-xs font-semibold text-gray-700 uppercase tracking-wider">
+                      <th className="px-4 md:px-6 py-3 text-xs font-semibold text-gray-700 uppercase tracking-wider">
                         Position
                       </th>
-                      <th className="px-6 py-3 text-xs font-semibold text-gray-700 uppercase tracking-wider">
+                      <th className="px-4 md:px-6 py-3 text-xs font-semibold text-gray-700 uppercase tracking-wider">
                         Age
                       </th>
-                      <th className="px-6 py-3 text-xs font-semibold text-gray-700 uppercase tracking-wider">
+                      <th className="px-4 md:px-6 py-3 text-xs font-semibold text-gray-700 uppercase tracking-wider">
                         Major
                       </th>
-                      <th className="px-6 py-3"></th>
+                      <th className="px-4 md:px-6 py-3"></th>
                     </tr>
                   </thead>
                   <tbody>
@@ -110,7 +110,7 @@ const PlayersPage = () => {
                       <tr>
                         <td
                           colSpan={6}
-                          className="px-6 py-8 text-center text-gray-400"
+                          className="px-4 md:px-6 py-8 text-center text-gray-400"
                         >
                           No players found.
                         </td>
@@ -121,22 +121,22 @@ const PlayersPage = () => {
                           key={player.id || idx}
                           className={idx % 2 === 0 ? "bg-white" : "bg-gray-50"}
                         >
-                          <td className="px-6 py-4 whitespace-nowrap text-gray-900">
+                          <td className="px-4 md:px-6 py-4 whitespace-nowrap text-gray-900">
                             {player.name}
                           </td>
-                          <td className="px-6 py-4 whitespace-nowrap text-gray-900">
+                          <td className="px-4 md:px-6 py-4 whitespace-nowrap text-gray-900">
                             {player.telephone}
                           </td>
-                          <td className="px-6 py-4 whitespace-nowrap text-gray-900">
+                          <td className="px-4 md:px-6 py-4 whitespace-nowrap text-gray-900">
                             {player.position}
                           </td>
-                          <td className="px-6 py-4 whitespace-nowrap text-gray-900">
+                          <td className="px-4 md:px-6 py-4 whitespace-nowrap text-gray-900">
                             {player.age}
                           </td>
-                          <td className="px-6 py-4 whitespace-nowrap text-gray-900">
+                          <td className="px-4 md:px-6 py-4 whitespace-nowrap text-gray-900">
                             {player.major}
                           </td>
-                          <td className="px-6 py-4 flex gap-4 whitespace-nowrap">
+                          <td className="px-4 md:px-6 py-4 flex flex-col md:flex-row gap-2 md:gap-4 whitespace-nowrap">
                             <button
                               onClick={() => handleDeletePlayer(player.id)}
                               className="text-red-700 hover:underline font-medium"
@@ -161,7 +161,7 @@ const PlayersPage = () => {
             </div>
 
             {/* Pagination Controls */}
-            <div className="flex justify-center mt-4 gap-2">
+            <div className="flex flex-wrap justify-center mt-4 gap-2">
               <button
                 onClick={() => setPage((p) => Math.max(1, p - 1))}
                 disabled={page === 1}

@@ -6,7 +6,7 @@ import { axiosInstance } from "../../lib/axios";
 import Sidebar from "../../components/Layout/Sidebar";
 import toast from "react-hot-toast";
 import { useTeams } from "../../hooks/useTeams";
-const EditPlayer = () => {
+const EditTeams = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const { editTeam } = useTeams();
@@ -85,4 +85,4 @@ const EditPlayer = () => {
     </div>
   );
 };
-export default EditPlayer;
+export default EditTeams;

@@ -47,6 +47,7 @@ export const Dashboard = () => {
   const handleLogout = async () => {
     try {
       await logout(); // logout API dulu
+      localStorage.removeItem("auth_token");
       localStorage.setItem("auth_user", "false"); // baru update localStorage
       navigate("/");
       toast.success("Logout Successfully");
@@ -58,27 +59,30 @@ export const Dashboard = () => {
 
   return (
     <>
-      <div className="min-h-screen left-0 flex">
+      <div className="min-h-screen flex">
         <Sidebar />
-        <div className="flex-1 p-8">
-          <div className="flex justify-end items-center mb-6">
+        <div className="flex-1 p-8 md:pl-70">
+          <div className="flex justify-end items-center mb-8 left-0">
             <span className="mr-4 font-medium text-gray-700">
-              {/* Ganti dengan nama user dari state/auth context */}
-              Selamat datang, <span className="font-bold">{userName.name}</span>
+              Selamat datang,{" "}
+              <span className="font-bold text-indigo-700">{userName.name}</span>
             </span>
             <button
-              className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded transition"
+              className="bg-gradient-to-r from-red-500 to-pink-500 hover:from-red-600 hover:to-pink-600 text-white px-5 py-2 rounded-lg shadow transition font-semibold"
               onClick={handleLogout}
             >
               Logout
             </button>
           </div>
-          <h1 className="text-3xl font-bold text-gray-800 mb-8">Dashboard</h1>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div className="bg-white shadow-lg rounded-2xl p-6 flex flex-col items-center">
-              <div className="rounded-full p-4 mb-4">
+          <h1 className="text-4xl font-extrabold text-gray-800 mb-10 tracking-tight drop-shadow">
+            Dashboard
+          </h1>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {/* Players Count Card */}
+            <div className="bg-white shadow-xl rounded-3xl p-8 flex flex-col items-center border-t-4 border-blue-400 hover:scale-105 transition-transform duration-200">
+              <div className="rounded-full bg-blue-100 p-5 mb-5 shadow">
                 <svg
-                  className="w-8 h-8 text-blue-500"
+                  className="w-10 h-10 text-blue-500"
                   fill="none"
                   stroke="currentColor"
                   strokeWidth="2"
@@ -91,18 +95,19 @@ export const Dashboard = () => {
                   />
                 </svg>
               </div>
-              <h2 className="text-xl font-semibold mb-2">Statistik</h2>
-              <p className="text-gray-600">Jumlah Pemain:</p>
-              <span className="text-3xl font-bold text-blue-600">
+              <h2 className="text-lg font-semibold mb-1 text-blue-700">
+                Jumlah Pemain
+              </h2>
+              <span className="text-4xl font-bold text-blue-600 mb-1">
                 {playersCount}
               </span>
+              <p className="text-gray-500">Total pemain terdaftar</p>
             </div>
-
-            {/* Teams Count */}
-            <div className="bg-white shadow-lg rounded-2xl p-6 flex flex-col items-center">
-              <div className="rounded-full p-4 mb-4">
+            {/* Teams Count Card */}
+            <div className="bg-white shadow-xl rounded-3xl p-8 flex flex-col items-center border-t-4 border-indigo-400 hover:scale-105 transition-transform duration-200">
+              <div className="rounded-full bg-indigo-100 p-5 mb-5 shadow">
                 <svg
-                  className="w-8 h-8 text-blue-500"
+                  className="w-10 h-10 text-indigo-500"
                   fill="none"
                   stroke="currentColor"
                   strokeWidth="2"
@@ -115,13 +120,39 @@ export const Dashboard = () => {
                   />
                 </svg>
               </div>
-              <h2 className="text-xl font-semibold mb-2">Statistik</h2>
-              <p className="text-gray-600">Jumlah Tim:</p>
-              <span className="text-3xl font-bold text-blue-600">
+              <h2 className="text-lg font-semibold mb-1 text-indigo-700">
+                Jumlah Tim
+              </h2>
+              <span className="text-4xl font-bold text-indigo-600 mb-1">
                 {teamsCount}
               </span>
+              <p className="text-gray-500">Total tim terdaftar</p>
             </div>
-            {/* Tambahkan card statistik lain di sini jika diperlukan */}
+            {/* Example: Add more cards here */}
+            <div className="bg-gradient-to-br from-pink-100 to-yellow-100 shadow-xl rounded-3xl p-8 flex flex-col items-center border-t-4 border-yellow-400 hover:scale-105 transition-transform duration-200">
+              <div className="rounded-full bg-yellow-200 p-5 mb-5 shadow">
+                <svg
+                  className="w-10 h-10 text-yellow-500"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M13 16h-1v-4h-1m1-4h.01M12 20a8 8 0 100-16 8 8 0 000 16z"
+                  />
+                </svg>
+              </div>
+              <h2 className="text-lg font-semibold mb-1 text-yellow-700">
+                Info Lainnya
+              </h2>
+              <span className="text-2xl font-bold text-yellow-600 mb-1">
+                Segera Hadir
+              </span>
+              <p className="text-gray-500">Fitur tambahan akan tersedia</p>
+            </div>
           </div>
         </div>
       </div>

@@ -14,12 +14,19 @@ export const drawPlayers = async () => {
   // Ambil token dari cookie
   const xsrfToken = getCookie("XSRF-TOKEN");
 
+  if (!xsrfToken) {
+    throw new Error(
+      "CSRF token not found. Please refresh the page and try again."
+    );
+  }
+
   return axiosInstance.post(
     "/api/draw",
     {},
     {
       headers: {
-        "X-XSRF-TOKEN": decodeURIComponent(xsrfToken || ""),
+        "X-XSRF-TOKEN": decodeURIComponent(xsrfToken),
+        "Content-Type": "application/json",
       },
       withCredentials: true,
     }
