@@ -20,13 +20,12 @@ const AddTeam = () => {
 
   return (
     <>
-      {/* <div className="flex">
-        <Sidebar /> */}
-      <div className="flex-1 w-full">
-        <h1>Tambah Tim</h1>
-        <TeamsForm onSubmit={handleSubmit}></TeamsForm>
+      <div className="flex">
+        <Sidebar />
+        <div className="flex-1 w-full">
+          <TeamsForm onSubmit={handleSubmit}></TeamsForm>
+        </div>
       </div>
-      {/* </div> */}
     </>
   );
 };

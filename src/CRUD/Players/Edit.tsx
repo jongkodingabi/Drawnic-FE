@@ -13,18 +13,18 @@ const EditPlayer = () => {
 
   type PlayerFormFields = {
     name: string;
-    telephone: string;
-    position: string;
-    age: number;
+    // telephone: string;
+    // position: string;
+    // age: number;
     major: string;
     [key: string]: string | number; // Add index signature
   };
 
   const [formData, setFormData] = useState<PlayerFormFields>({
     name: "",
-    telephone: "",
-    position: "",
-    age: 0,
+    // telephone: "",
+    // position: "",
+    // age: 0,
     major: "",
   });
 
@@ -33,9 +33,9 @@ const EditPlayer = () => {
       const data = response.data.data;
       setFormData({
         name: data.name,
-        telephone: data.telephone,
-        position: data.position,
-        age: data.age,
+        // telephone: data.telephone,
+        // position: data.position,
+        // age: data.age,
         major: data.major,
       });
     });
@@ -71,7 +71,7 @@ const EditPlayer = () => {
           onSubmit={handleSubmit}
           className="space-y-4 grid grid-cols-2 gap-4"
         >
-          {["name", "telephone", "position", "major"].map((field) => (
+          {["name", "major"].map((field) => (
             <div key={field}>
               <label className="block mb-1 capitalize">{field}</label>
               <input
@@ -83,16 +83,6 @@ const EditPlayer = () => {
               />
             </div>
           ))}
-          <div>
-            <label className="block mb-1">Age</label>
-            <input
-              type="number"
-              name="age"
-              value={formData.age}
-              onChange={handleChange}
-              className="w-full border px-3 py-2 rounded"
-            />
-          </div>
           <button
             type="submit"
             className="bg-blue-600 text-white px-4 py-2 rounded"

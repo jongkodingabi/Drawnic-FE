@@ -1,18 +1,15 @@
 import {
   Home,
   User,
-  Settings,
   Group,
   StopCircleIcon,
-  GroupIcon,
-  LucideGroup,
   PersonStanding,
   Send,
 } from "lucide-react";
 import { Link } from "react-router-dom";
 import React from "react";
 const Sidebar = () => {
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = React.useState(true);
 
   return (
     <>

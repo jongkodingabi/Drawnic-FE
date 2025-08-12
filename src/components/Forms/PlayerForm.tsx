@@ -1,13 +1,12 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
 import Sidebar from "../Layout/Sidebar";
 
 type PlayerForms = {
   initialData?: {
     name: string;
-    telephone: string;
-    position: string;
-    age: number;
+    // telephone: string;
+    // position: string;
+    // age: number;
     major: string;
   };
 
@@ -18,9 +17,9 @@ const PlayerForm = ({ initialData, onSubmit }: PlayerForms) => {
   const [form, setForm] = useState(
     initialData || {
       name: "",
-      telephone: "",
-      position: "",
-      age: 0,
+      // telephone: "",
+      // position: "",
+      // age: 0,
       major: "",
     }
   );
@@ -70,70 +69,18 @@ const PlayerForm = ({ initialData, onSubmit }: PlayerForms) => {
                 className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
               />
             </div>
-            <div>
-              <label
-                htmlFor="telephone"
-                className="block text-sm font-semibold text-gray-700 mb-2"
-              >
-                Telephone
-              </label>
-              <input
-                id="telephone"
-                name="telephone"
-                placeholder="Enter telephone number"
-                value={form.telephone}
-                onChange={handleChange}
-                required
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
-              />
-            </div>
-            <div>
-              <label
-                htmlFor="position"
-                className="block text-sm font-semibold text-gray-700 mb-2"
-              >
-                Position
-              </label>
-              <input
-                id="position"
-                name="position"
-                placeholder="Enter position"
-                value={form.position}
-                onChange={handleChange}
-                required
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
-              />
-            </div>
-            <div>
-              <label
-                htmlFor="age"
-                className="block text-sm font-semibold text-gray-700 mb-2"
-              >
-                Age
-              </label>
-              <input
-                id="age"
-                name="age"
-                type="number"
-                min={0}
-                placeholder="Enter age"
-                value={form.age}
-                onChange={handleChange}
-                required
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
-              />
-            </div>
-            <div className="md:col-span-2">
+
+            <div className="md:col-span-1">
               <label
                 htmlFor="major"
                 className="block text-sm font-semibold text-gray-700 mb-2"
               >
-                Major
+                Role
               </label>
               <input
                 id="major"
                 name="major"
-                placeholder="Enter major"
+                placeholder="Enter Role"
                 value={form.major}
                 onChange={handleChange}
                 required

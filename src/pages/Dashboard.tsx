@@ -46,14 +46,15 @@ export const Dashboard = () => {
 
   const handleLogout = async () => {
     try {
-      await logout(); // logout API dulu
-      localStorage.removeItem("auth_token");
-      localStorage.setItem("auth_user", "false"); // baru update localStorage
-      navigate("/");
+      await logout();
       toast.success("Logout Successfully");
     } catch (error) {
-      console.error("Failed To logout:", error);
+      console.error("Failed to logout:", error);
       toast.error("Failed to Logout");
+    } finally {
+      localStorage.removeItem("auth_token");
+      localStorage.setItem("auth_user", "false");
+      navigate("/");
     }
   };
 

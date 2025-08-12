@@ -90,7 +90,7 @@ const PlayersPage = () => {
                       <th className="px-4 md:px-6 py-3 text-xs font-semibold text-gray-700 uppercase tracking-wider">
                         Name
                       </th>
-                      <th className="px-4 md:px-6 py-3 text-xs font-semibold text-gray-700 uppercase tracking-wider">
+                      {/* <th className="px-4 md:px-6 py-3 text-xs font-semibold text-gray-700 uppercase tracking-wider">
                         Telephone
                       </th>
                       <th className="px-4 md:px-6 py-3 text-xs font-semibold text-gray-700 uppercase tracking-wider">
@@ -98,11 +98,11 @@ const PlayersPage = () => {
                       </th>
                       <th className="px-4 md:px-6 py-3 text-xs font-semibold text-gray-700 uppercase tracking-wider">
                         Age
-                      </th>
+                      </th> */}
                       <th className="px-4 md:px-6 py-3 text-xs font-semibold text-gray-700 uppercase tracking-wider">
-                        Major
+                        Role
                       </th>
-                      <th className="px-4 md:px-6 py-3"></th>
+                      <th className="px-4 md:px-6 py-3">Aksi</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -124,7 +124,7 @@ const PlayersPage = () => {
                           <td className="px-4 md:px-6 py-4 whitespace-nowrap text-gray-900">
                             {player.name}
                           </td>
-                          <td className="px-4 md:px-6 py-4 whitespace-nowrap text-gray-900">
+                          {/* <td className="px-4 md:px-6 py-4 whitespace-nowrap text-gray-900">
                             {player.telephone}
                           </td>
                           <td className="px-4 md:px-6 py-4 whitespace-nowrap text-gray-900">
@@ -132,7 +132,7 @@ const PlayersPage = () => {
                           </td>
                           <td className="px-4 md:px-6 py-4 whitespace-nowrap text-gray-900">
                             {player.age}
-                          </td>
+                          </td> */}
                           <td className="px-4 md:px-6 py-4 whitespace-nowrap text-gray-900">
                             {player.major}
                           </td>

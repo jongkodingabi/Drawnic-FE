@@ -20,6 +20,7 @@ const PlayersByTeamPage = () => {
   const [page, setPage] = useState(1);
   // const [selectedIds, setSelectedIds] = useState<string[]>([]);
   const [deleting, setDeleting] = useState(false);
+  const [selectedIds, setSelectedIds] = useState<string[]>([]);
 
   // Ambil daftar tim
   const fetchTeams = async () => {
@@ -76,33 +77,6 @@ const PlayersByTeamPage = () => {
     setPage(1);
   }, [search]);
 
-  // // Checkbox helpers
-  // const isAllSelected =
-  //   paginatedDatas.length > 0 &&
-  //   paginatedDatas.every((item: any) => selectedIds.includes(item.player.id));
-  // const isIndeterminate = selectedIds.length > 0 && !isAllSelected;
-
-  // const handleSelectAll = () => {
-  //   if (isAllSelected) {
-  //     setSelectedIds(
-  //       selectedIds.filter(
-  //         (id) => !paginatedDatas.some((item: any) => item.player.id === id)
-  //       )
-  //     );
-  //   } else {
-  //     const newIds = paginatedDatas
-  //       .map((item: any) => item.player.id)
-  //       .filter((id: string) => !selectedIds.includes(id));
-  //     setSelectedIds([...selectedIds, ...newIds]);
-  //   }
-  // };
-
-  // const handleSelectOne = (id: string) => {
-  //   setSelectedIds((prev) =>
-  //     prev.includes(id) ? prev.filter((sid) => sid !== id) : [...prev, id]
-  //   );
-  // };
-
   // Helper untuk ambil cookie (XSRF-TOKEN)
   const getCookie = (name: string): string | undefined => {
     const value = `; ${document.cookie}`;
@@ -141,26 +115,72 @@ const PlayersByTeamPage = () => {
   };
 
   // Bulk delete
-  // const handleBulkDelete = async () => {
-  //   if (selectedIds.length === 0) return;
-  //   if (!window.confirm("Yakin hapus semua pemain terpilih?")) return;
-  //   setDeleting(true);
-  //   try {
-  //     await axiosInstance.post(
-  //       `/api/players/bulk-delete`,
-  //       {
-  //         ids: selectedIds,
-  //       },
-  //       {}
-  //     );
-  //     fetchPlayers();
-  //     setSelectedIds([]);
-  //   } catch (err) {
-  //     alert("Gagal menghapus pemain terpilih");
-  //   } finally {
-  //     setDeleting(false);
-  //   }
-  // };
+  const isAllSelected =
+    paginatedDatas.length > 0 &&
+    paginatedDatas.every((item: any) => selectedIds.includes(item.player.id));
+
+  const isIndeterminate = selectedIds.length > 0 && !isAllSelected;
+
+  const handleSelectAll = () => {
+    if (isAllSelected) {
+      setSelectedIds(
+        selectedIds.filter(
+          (id) => !paginatedDatas.some((item: any) => item.player.id === id)
+        )
+      );
+    } else {
+      const newIds = paginatedDatas
+        .map((item: any) => item.player.id)
+        .filter((id: string) => !selectedIds.includes(id));
+      setSelectedIds([...selectedIds, ...newIds]);
+    }
+  };
+
+  const handleSelectOne = (id: string) => {
+    setSelectedIds((prev) =>
+      prev.includes(id) ? prev.filter((sid) => sid !== id) : [...prev, id]
+    );
+  };
+
+  const handleBulkDelete = async () => {
+    if (selectedIds.length === 0) return;
+    if (!window.confirm("Yakin hapus semua pemain yang dipilih?")) return;
+
+    setDeleting(true);
+    try {
+      await axiosInstance.get("/sanctum/csrf-cookie");
+      const xsrfToken = getCookie("XSRF-TOKEN") || "";
+
+      await axiosInstance.post(
+        `/api/player-team-draw/bulk-delete`,
+        {
+          ids: selectedIds,
+        },
+        {
+          headers: {
+            "X-XSRF-TOKEN": decodeURIComponent(xsrfToken),
+          },
+          withCredentials: true,
+        }
+      );
+
+      toast.success("Pemain berhasil dihapus");
+      setSelectedIds([]);
+      fetchPlayers(); // refresh data
+    } catch (err) {
+      console.error("Gagal bulk delete:", err);
+      toast.error("Gagal menghapus pemain");
+    } finally {
+      setDeleting(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchPlayers();
+    setSearch("");
+    setPage(1);
+    setSelectedIds([]); // tambahkan ini
+  }, [team]);
 
   return (
     <div className="flex flex-col md:flex-row">
@@ -171,6 +191,16 @@ const PlayersByTeamPage = () => {
           <h1 className="text-2xl md:text-3xl font-bold mb-4 md:mb-6 text-gray-800">
             Daftar Pemain Tim {team}
           </h1>
+
+          {selectedIds.length > 0 && (
+            <button
+              onClick={handleBulkDelete}
+              disabled={deleting}
+              className="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 mb-4"
+            >
+              Hapus Terpilih ({selectedIds.length})
+            </button>
+          )}
 
           <div className="bg-gray-200 rounded-2xl max-w-full md:max-w-7xl shadow-2xl p-4 md:p-8 mb-4 md:mb-6">
             <div className="mb-4 flex flex-col md:flex-row items-stretch md:items-center gap-2 md:gap-4">
@@ -212,6 +242,17 @@ const PlayersByTeamPage = () => {
                   <table className="w-full min-w-[500px] text-left">
                     <thead className="bg-gray-100">
                       <tr>
+                        <th className="px-4 py-3">
+                          <input
+                            type="checkbox"
+                            checked={isAllSelected}
+                            ref={(el) => {
+                              if (el) el.indeterminate = isIndeterminate;
+                            }}
+                            onChange={handleSelectAll}
+                          />
+                        </th>
+
                         <th className="px-4 md:px-6 py-3 text-xs font-semibold text-gray-700 uppercase tracking-wider">
                           #
                         </th>
@@ -244,6 +285,14 @@ const PlayersByTeamPage = () => {
                               idx % 2 === 0 ? "bg-white" : "bg-gray-50"
                             }
                           >
+                            <td className="px-4 py-4">
+                              <input
+                                type="checkbox"
+                                checked={selectedIds.includes(item.player.id)}
+                                onChange={() => handleSelectOne(item.player.id)}
+                              />
+                            </td>
+
                             <td className="px-4 md:px-6 py-4 whitespace-nowrap text-gray-900">
                               {(page - 1) * PAGE_SIZE + idx + 1}
                             </td>

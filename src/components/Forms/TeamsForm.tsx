@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 
 type TeamForms = {
   initialData?: {
@@ -31,13 +31,13 @@ const TeamsForm = ({ initialData, onSubmit }: TeamForms) => {
 
   return (
     <>
-      <div className="flex">
+      <div className="flex justify-center items-center min-h-screen bg-gray-100">
         {/* <Sidebar /> */}
-        <Link to="/teams">
+        {/* <Link to="/teams">
           <button className="bg-blue-500 text-white w-20 rounded-3xl p-2 mb-8 hover:bg-blue-600 transition-colors fixed z-50 shadow-lg">
             {"<-"} Back
           </button>
-        </Link>
+        </Link> */}
         <form
           onSubmit={handleSubmit}
           className="min-w-2xl mx-auto p-8 rounded-lg shadow-xl space-y-6"
